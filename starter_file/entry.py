@@ -1,7 +1,7 @@
 import joblib
 import json
-import numpy as np
 import os
+import pandas as pd
 
 
 def init():
@@ -11,7 +11,9 @@ def init():
 
 
 def run(request):
-    feats = np.array(json.loads(request))
-    print(feats)
+    data = json.loads(request)
+    feats = pd.DataFrame.from_records(data)
+    print("Received matchup = ", feats)
     result = model.predict(feats)
+    print("Prediction : 0 for Team1, 1 for Team2 = ", result)
     return result.tolist()
