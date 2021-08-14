@@ -1,6 +1,8 @@
 # March Madness Matchup Predictor
 
-Use AzureML to train a classifier on the last decade of NCAA college basketball team stats to predict which team in a match will win.
+Use AzureML to train a classifier on the last decade of NCAA college basketball team stats to predict which team in a match will win.  AutoML and Hyperdrive models are compared by accuracy, and the best of the two classifiers is deployed and consumed as an endpoint.
+
+![capstone_arch](https://user-images.githubusercontent.com/80217508/129452199-86cde1de-302c-4ef4-8d1d-d17296e448d7.png)
 
 ## Project Set Up and Installation
 *OPTIONAL:* If your project has any special installation steps, this is where you should put it. To turn this project into a professional portfolio project, you are encouraged to explain how to set up this project in AzureML.
@@ -17,6 +19,10 @@ The task is to train a classifier (effectively binary) that given some key featu
 
 ### Access
 Data is downloaded as CSV from external URL: https://s3.amazonaws.com/static.akk.io/Akkio-NCAAHistoricalData.csv
+
+Preprocessing steps are mostly the same for AutoML in Jupyter notebook (orange) and the Hyperdrive training script (blue).  Create a TabularDataset from URL, convert into a Pandas Dataframe, and filter on year and features as determined previously.  Afterwards, AutoML only needs the dataset registered to blobstore, whereas for Hyperdrive I convert the winner column to binary and create a KFold object for cross validation to support SKLearn Logistic Regression.
+
+![access_data](https://user-images.githubusercontent.com/80217508/129452469-fa5dc9dc-b69e-4781-b71d-874251cd20c6.png)
 
 ## Automated ML
 Classification with 10-fold cross validation:
